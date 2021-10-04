@@ -7,14 +7,14 @@ import java.awt.*;
 
 public class EditWindow extends Window {
     // 現在画面の日付
-    private String nowYear;
-    private String nowMonth;
-    private String nowDay;
+    private String now_year;
+    private String now_month;
+    private String now_day;
 
     public final void setNowDate(String year, String month, String day) {
-        this.nowYear = year;
-        this.nowMonth = month;
-        this.nowDay = day;
+        this.now_year = year;
+        this.now_month = month;
+        this.now_day = day;
     }
 
     // ウィンドウの設定
@@ -29,7 +29,7 @@ public class EditWindow extends Window {
     // ウィンドウのテキスト設定
     public void setTextWindow() {
         final JPanel panel = new JPanel();
-        final JLabel label = new JLabel(String.format("%s年 %s月 %s日", this.nowYear, this.nowMonth, this.nowDay));
+        final JLabel label = new JLabel(String.format("%s年 %s月 %s日", this.now_year, this.now_month, this.now_day));
 
         panel.add(label);
 
@@ -37,14 +37,14 @@ public class EditWindow extends Window {
     }
 
     // ウィンドウにテキストエリアを設置
-    public void setTextArea(String firstText, int columns) {
-        final JTextArea textarea = new JTextArea(firstText); // テキストエリアの初期値を設定
-        textarea.setColumns(columns); // テキストエリアの列数を指定
-        textarea.setPreferredSize(new Dimension(300, 400)); // サイズを指定
-        textarea.setLineWrap(true); // 折り返し指定
+    public void setTextArea(String first_text, int columns) {
+        final JTextArea text_area = new JTextArea(first_text); // テキストエリアの初期値を設定
+        text_area.setColumns(columns); // テキストエリアの列数を指定
+        text_area.setPreferredSize(new Dimension(300, 400)); // サイズを指定
+        text_area.setLineWrap(true); // 折り返し指定
 
         final JPanel panel = new JPanel();
-        panel.add(textarea);
+        panel.add(text_area);
 
         this.getContentPane().add(panel, BorderLayout.CENTER);
     }

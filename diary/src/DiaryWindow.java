@@ -10,25 +10,25 @@ import java.util.Calendar;
 
 public class DiaryWindow extends Window implements ActionListener {
     // 現在画面の日付
-    protected String nowYear;
-    protected String nowMonth;
-    protected String nowDay;
+    protected String now_year;
+    protected String now_month;
+    protected String now_day;
 
     // 年月遷移ボタン類
-    private final JButton prevMonth = new JButton("翌月");// 翌月ボタン
-    private final JButton backMonth = new JButton("前月");// 前月ボタン
-    private final JButton prevYear = new JButton("翌年");// 翌年ボタン
-    private final JButton backYear = new JButton("前年");// 前年ボタン
+    private final JButton prev_month = new JButton("翌月");// 翌月ボタン
+    private final JButton back_month = new JButton("前月");// 前月ボタン
+    private final JButton prev_year = new JButton("翌年");// 翌年ボタン
+    private final JButton back_year = new JButton("前年");// 前年ボタン
 
-    private JLabel YMLabel;// 年月表示ラベル
+    private JLabel YM_label;// 年月表示ラベル
 
     // day panel
     private JPanel day_panel = new JPanel();
 
     public final void setNowDate(String year, String month, String day) {
-        this.nowYear = year;
-        this.nowMonth = month;
-        this.nowDay = day;
+        this.now_year = year;
+        this.now_month = month;
+        this.now_day = day;
     }
 
     // ウィンドウの設定
@@ -46,78 +46,78 @@ public class DiaryWindow extends Window implements ActionListener {
 
         // 前年ボタン
         // final JButton backYear = new JButton("前年");
-        this.backYear.addActionListener(this);
-        panel.add(this.backYear);
+        this.back_year.addActionListener(this);
+        panel.add(this.back_year);
 
         // 前月ボタン
         // final JButton backMonth = new JButton("前月");
-        this.backMonth.addActionListener(this);
-        panel.add(this.backMonth);
+        this.back_month.addActionListener(this);
+        panel.add(this.back_month);
 
         // 〇〇年✕✕月
-        this.YMLabel = new JLabel(this.nowYear + "年 " + this.nowMonth + "月"); // ラベルのインスタンスの生成
-        this.YMLabel.setFont(new Font("MSGothic", Font.PLAIN, 30));
-        this.YMLabel.setForeground(Color.BLUE);
-        panel.add(YMLabel);
+        this.YM_label = new JLabel(this.now_year + "年 " + this.now_month + "月"); // ラベルのインスタンスの生成
+        this.YM_label.setFont(new Font("MSGothic", Font.PLAIN, 30));
+        this.YM_label.setForeground(Color.BLUE);
+        panel.add(YM_label);
 
         // 翌月ボタン
         // final JButton prevMonth = new JButton("翌月");
-        this.prevMonth.addActionListener(this);
-        panel.add(this.prevMonth);
+        this.prev_month.addActionListener(this);
+        panel.add(this.prev_month);
 
         // 翌年ボタン
         // final JButton prevYear = new JButton("前年");
-        this.prevYear.addActionListener(this);
-        panel.add(this.prevYear);
+        this.prev_year.addActionListener(this);
+        panel.add(this.prev_year);
 
         this.add(panel, BorderLayout.NORTH); // パネルをウインドウの表示領域に配置
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.backMonth) {
+        if (e.getSource() == this.back_month) {
             // 前月ボタンの処理
-            final int temp_month = Integer.valueOf(this.nowMonth) - 1;
+            final int temp_month = Integer.valueOf(this.now_month) - 1;
             if (1 <= temp_month && temp_month <= 12) {
-                this.nowMonth = String.valueOf(temp_month);
+                this.now_month = String.valueOf(temp_month);
             } else if (temp_month <= 0) {
-                this.nowMonth = "12";
-                this.nowYear = String.valueOf(Integer.valueOf(this.nowYear) - 1);
+                this.now_month = "12";
+                this.now_year = String.valueOf(Integer.valueOf(this.now_year) - 1);
             }
             this.setButtonWindow(); // その年月の日付ボタンを設定
-            this.YMLabel.setText(this.nowYear + "年 " + this.nowMonth + "月");
-        } else if (e.getSource() == this.prevMonth) {
+            this.YM_label.setText(this.now_year + "年 " + this.now_month + "月");
+        } else if (e.getSource() == this.prev_month) {
             // 翌月ボタンの処理
-            final int temp_month = Integer.valueOf(this.nowMonth) + 1;
+            final int temp_month = Integer.valueOf(this.now_month) + 1;
             if (1 <= temp_month && temp_month <= 12) {
-                this.nowMonth = String.valueOf(temp_month);
+                this.now_month = String.valueOf(temp_month);
             } else if (13 <= temp_month) {
-                this.nowMonth = "1";
-                this.nowYear = String.valueOf(Integer.valueOf(this.nowYear) + 1);
+                this.now_month = "1";
+                this.now_year = String.valueOf(Integer.valueOf(this.now_year) + 1);
             }
             this.setButtonWindow(); // その年月の日付ボタンを設定
-            this.YMLabel.setText(this.nowYear + "年 " + this.nowMonth + "月");
-        } else if (e.getSource() == this.backYear) {
+            this.YM_label.setText(this.now_year + "年 " + this.now_month + "月");
+        } else if (e.getSource() == this.back_year) {
             // 前年ボタンの処理
-            final int temp_year = Integer.valueOf(this.nowYear) - 1;
+            final int temp_year = Integer.valueOf(this.now_year) - 1;
             if (temp_year < 1950) { // 例外チェック
                 // メッセージダイアログの表示
                 JOptionPane.showMessageDialog(null, "ごめんなさい^_^\n1950年よりも前には遡れません。");
             } else {
-                this.nowYear = String.valueOf(Integer.valueOf(this.nowYear) - 1);
+                this.now_year = String.valueOf(Integer.valueOf(this.now_year) - 1);
                 this.setButtonWindow(); // その年月の日付ボタンを設定
-                this.YMLabel.setText(this.nowYear + "年 " + this.nowMonth + "月");
+                this.YM_label.setText(this.now_year + "年 " + this.now_month + "月");
             }
-        } else if (e.getSource() == this.prevYear) {
+        } else if (e.getSource() == this.prev_year) {
             // 翌年ボタンの処理
-            final int temp_year = Integer.valueOf(this.nowYear) + 1;
+            final int temp_year = Integer.valueOf(this.now_year) + 1;
             if (2200 < temp_year) {
                 // メッセージダイアログの表示
                 JOptionPane.showMessageDialog(null, "ごめんなさい^_^\n2200年よりも後には進めません。");
             } else {
-                this.nowYear = String.valueOf(Integer.valueOf(this.nowYear) + 1);
+                this.now_year = String.valueOf(Integer.valueOf(this.now_year) + 1);
                 this.setButtonWindow(); // その年月の日付ボタンを設定
-                this.YMLabel.setText(this.nowYear + "年 " + this.nowMonth + "月");
+                this.YM_label.setText(this.now_year + "年 " + this.now_month + "月");
             }
         }
 
@@ -139,7 +139,7 @@ public class DiaryWindow extends Window implements ActionListener {
         // その月の日数を取得
         // this.nowMonth = "2"; //debug
         final Calendar calendar = Calendar.getInstance();
-        calendar.set(Integer.parseInt(this.nowYear), Integer.parseInt(this.nowMonth) - 1, 1);
+        calendar.set(Integer.parseInt(this.now_year), Integer.parseInt(this.now_month) - 1, 1);
         final int day_in_month = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 
         final int grid_row = 7;
@@ -153,7 +153,8 @@ public class DiaryWindow extends Window implements ActionListener {
             if (i < day_in_month) {
                 final JButton dateButton = new JButton("" + (i + 1));
                 // dateButton.setBackground(Color.LIGHT_GRAY);// ボタン背景色
-                dateButton.addActionListener(new CreateEditWindow(this.nowYear, this.nowMonth, String.valueOf(i + 1)));
+                dateButton
+                        .addActionListener(new CreateEditWindow(this.now_year, this.now_month, String.valueOf(i + 1)));
                 day_panel.add(dateButton);
             } else { // 最大日付外 -> 枠だけ表示
                 final JButton dateButton = new JButton();
@@ -161,7 +162,7 @@ public class DiaryWindow extends Window implements ActionListener {
                 day_panel.add(dateButton);
             }
         }
-        Debugger.out("hgoe; " + this.nowYear + "年" + this.nowMonth + "月" + this.nowDay + "日");
+        Debugger.out("hgoe; " + this.now_year + "年" + this.now_month + "月" + this.now_day + "日");
 
         // ボタンを表示
         this.getContentPane().add(day_panel, BorderLayout.CENTER);
@@ -171,14 +172,14 @@ public class DiaryWindow extends Window implements ActionListener {
     // 日付ボタンクリック時のアクション
     static class CreateEditWindow implements ActionListener {
 
-        private String nowYear;
-        private String nowMonth;
-        private String nowDay;
+        private String now_year;
+        private String now_month;
+        private String now_day;
 
         public CreateEditWindow(String year, String month, String day) {
-            this.nowYear = year;
-            this.nowMonth = month;
-            this.nowDay = day;
+            this.now_year = year;
+            this.now_month = month;
+            this.now_day = day;
         }
 
         // 同一タイトルのウィンドウが既に開かれているか確認
@@ -195,7 +196,7 @@ public class DiaryWindow extends Window implements ActionListener {
         public void actionPerformed(ActionEvent e) {
 
             // ウィンドウ設定
-            final String window_title = String.format("%s年%s月%s日の日記", this.nowYear, this.nowMonth, this.nowDay); // タイトル
+            final String window_title = String.format("%s年%s月%s日の日記", this.now_year, this.now_month, this.now_day); // タイトル
             Debugger.out("CreateEditWindow of " + window_title);
 
             // 同一ウィンドウタイトルで既に開かれているか確認
@@ -214,8 +215,8 @@ public class DiaryWindow extends Window implements ActionListener {
                 final EditWindow editWindow = new EditWindow(window_title, window_width, window_height);
 
                 // 日付
-                editWindow.setNowDate(this.nowYear, this.nowMonth, this.nowDay);
-                Debugger.out(this.nowYear + "年" + this.nowMonth + "月" + this.nowDay + "日");
+                editWindow.setNowDate(this.now_year, this.now_month, this.now_day);
+                Debugger.out(this.now_year + "年" + this.now_month + "月" + this.now_day + "日");
 
                 // アイコン
                 editWindow.setImageIcon(Setting.icon_path);
